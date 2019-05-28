@@ -2,11 +2,15 @@ from flask import Flask
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from flask import jsonify, request, json
+from flask import jsonify, request
+import json
+from flask_cors import CORS
 
 from joblib import dump, load
 
 app = Flask(__name__)
+
+CORS(app)
 
 
 @app.route('/')
@@ -40,7 +44,7 @@ def image():
         predictions = model.predict(X_test_df)
         probabilidades = model.predict_proba(X_test_df)
 
-        response = jsonify({'main': predictions.tolist()[0], 'probabilidades': probabilidades.tolist(), clases: clases})
+        response = jsonify({'main': predictions.tolist()[0], 'probabilidades': probabilidades.tolist(), 'clases': clases})
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 

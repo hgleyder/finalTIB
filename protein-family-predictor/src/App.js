@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { Box, Button, TextInput, Grommet } from 'grommet';
 import styled from 'styled-components';
+import ProteinService from './service/backend'
 
 const theme = {
   global: {
@@ -19,6 +20,13 @@ class App extends React.Component {
     protein: '',
     results: '',
   }
+
+  clasificarProteina = async () => {
+    const {protein} = this.state;
+    const results = await ProteinService.clasificaProteina(protein);
+    console.log(results)
+    this.setState({ results: results.data });
+  }
   render(){
     const {protein} = this.state;
   return (
@@ -33,7 +41,7 @@ class App extends React.Component {
           <Button
             label="Clasificar Proteina"
             primary 
-            onClick={() => alert('hello, world')}
+            onClick={this.clasificarProteina}
           />
         </Container>
       </Box>
@@ -51,7 +59,7 @@ const Container = styled.div`
 
   & > button {
     position: relative;
-    top: 1rem;
+    top: 1rem;  
     width: 15rem;
   }
 `;
