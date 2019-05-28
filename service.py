@@ -35,16 +35,15 @@ def image():
 
         vect = load('parseador.p')
         model = load('model.p')
-        clases = load('clases.p')
 
         instances = [sequence]
 
         X_test_df = vect.transform(instances)
 
         predictions = model.predict(X_test_df)
-        probabilidades = model.predict_proba(X_test_df)
+        probabilidades = model.predict_log_proba(X_test_df)
 
-        response = jsonify({'main': predictions.tolist()[0], 'probabilidades': probabilidades.tolist(), 'clases': clases})
+        response = jsonify({'main': predictions.tolist()[0], 'probabilidades': probabilidades.tolist(), 'clases': model.classes_.tolist()})
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 

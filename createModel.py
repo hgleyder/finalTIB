@@ -11,20 +11,15 @@ start = time.time()
 # Import Datasets
 data = pd.read_csv('dataset.csv')
 
-classes = []
-
-for col in data['classification']:
-    if not col in classes:
-        classes.append(col)
-
-
-dump(classes, open("clases.p", "wb"))
 
 # 3). ----- Train Test Split -----
 X_train, X_test,y_train,y_test = train_test_split(data['sequence'], data['classification'], test_size = 0.2, random_state = 1)
 
+
+
 # Create a Count Vectorizer to gather the unique elements in sequence
 vect = CountVectorizer(analyzer = 'char_wb', ngram_range = (4,4))
+
 
 # Fit and Transform CountVectorizer
 vect.fit(X_train)
